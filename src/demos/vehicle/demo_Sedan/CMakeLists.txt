@@ -1,5 +1,5 @@
 #=============================================================================
-# CMake configuration file for the UAZBUS demos.
+# CMake configuration file for the Sedan demos.
 # These example programs requires Irrlicht run-time visualization
 #=============================================================================
 
@@ -8,11 +8,10 @@ IF(NOT ENABLE_MODULE_IRRLICHT)
 ENDIF()
 
 #--------------------------------------------------------------
-# List all UAZBUS demos
+# List all Sedan demos
 
 SET(DEMOS
-    demo_VEH_UAZBUS
-)
+    demo_VEH_Sedan)
 
 #--------------------------------------------------------------
 # Additional include directories
@@ -28,7 +27,7 @@ FOREACH(DEMO ${DEMOS})
 
     ADD_EXECUTABLE(${DEMO} ${DEMO}.cpp)
     SOURCE_GROUP("" FILES ${DEMO}.cpp)
-    SET_TARGET_PROPERTIES(${DEMO} PROPERTIES 
+    SET_TARGET_PROPERTIES(${DEMO} PROPERTIES
                           COMPILE_FLAGS "${CH_CXX_FLAGS} ${CH_IRRLICHT_CXX_FLAGS}"
                           LINK_FLAGS "${CH_LINKERFLAG_EXE}")
     TARGET_LINK_LIBRARIES(${DEMO}
