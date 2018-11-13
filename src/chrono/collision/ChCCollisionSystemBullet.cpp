@@ -1322,11 +1322,13 @@ void ChCollisionSystemBullet::ReportContacts(ChContactContainer* mcontactcontain
                     icontact.reaction_cache = pt.reactions_cache;
 
                     // Execute some user custom callback, if any
+                    bool add_contact = true;
                     if (this->narrow_callback)
-                        this->narrow_callback->OnNarrowphase(icontact);
+                        add_contact = this->narrow_callback->OnNarrowphase(icontact);
 
                     // Add to contact container
-                    mcontactcontainer->AddContact(icontact);
+                    if (add_contact)
+                        mcontactcontainer->AddContact(icontact);
                 }
             }
         }
@@ -1371,10 +1373,20 @@ void ChCollisionSystemBullet::ReportProximities(ChProximityContainer* mproximity
 }
 
 bool ChCollisionSystemBullet::RayHit(const ChVector<>& from, const ChVector<>& to, ChRayhitResult& mresult) const {
+    return RayHit(from, to, mresult, btBroadphaseProxy::DefaultFilter, btBroadphaseProxy::AllFilter);
+}
+
+bool ChCollisionSystemBullet::RayHit(const ChVector<>& from,
+                                     const ChVector<>& to,
+                                     ChRayhitResult& mresult,
+                                     short int filter_group,
+                                     short int filter_mask) const {
     btVector3 btfrom((btScalar)from.x(), (btScalar)from.y(), (btScalar)from.z());
     btVector3 btto((btScalar)to.x(), (btScalar)to.y(), (btScalar)to.z());
 
     btCollisionWorld::ClosestRayResultCallback rayCallback(btfrom, btto);
+    rayCallback.m_collisionFilterGroup = filter_group;
+    rayCallback.m_collisionFilterMask = filter_mask;
 
     this->bt_collision_world->rayTest(btfrom, btto, rayCallback);
 
@@ -1401,10 +1413,21 @@ bool ChCollisionSystemBullet::RayHit(const ChVector<>& from,
                                      const ChVector<>& to,
                                      ChCollisionModel* model,
                                      ChRayhitResult& mresult) const {
+    return RayHit(from, to, model, mresult, btBroadphaseProxy::DefaultFilter, btBroadphaseProxy::AllFilter);
+}
+
+bool ChCollisionSystemBullet::RayHit(const ChVector<>& from,
+                                     const ChVector<>& to,
+                                     ChCollisionModel* model,
+                                     ChRayhitResult& mresult,
+                                     short int filter_group,
+                                     short int filter_mask) const {
     btVector3 btfrom((btScalar)from.x(), (btScalar)from.y(), (btScalar)from.z());
     btVector3 btto((btScalar)to.x(), (btScalar)to.y(), (btScalar)to.z());
 
     btCollisionWorld::AllHitsRayResultCallback rayCallback(btfrom, btto);
+    rayCallback.m_collisionFilterGroup = filter_group;
+    rayCallback.m_collisionFilterMask = filter_mask;
 
     this->bt_collision_world->rayTest(btfrom, btto, rayCallback);
 

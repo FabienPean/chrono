@@ -16,8 +16,8 @@
 #define CHC_COLLISIONSYSTEM_H
 
 #include "chrono/collision/ChCCollisionInfo.h"
-#include "chrono/core/ChFrame.h"
 #include "chrono/core/ChApiCE.h"
+#include "chrono/core/ChFrame.h"
 
 namespace chrono {
 
@@ -33,7 +33,6 @@ namespace collision {
 /// Base class for generic collision engine.
 /// Most methods are 'pure virtual': they need to be implemented by derived classes.
 class ChApi ChCollisionSystem {
-
   public:
     ChCollisionSystem(unsigned int max_objects = 16000, double scene_size = 500) {
         narrow_callback = 0;
@@ -120,7 +119,8 @@ class ChApi ChCollisionSystem {
         virtual ~NarrowphaseCallback() {}
 
         /// Callback used to process collision pairs found by the narrow-phase collision step.
-        virtual void OnNarrowphase(ChCollisionInfo& contactinfo) = 0;
+        /// Return true to generate a contact for this pair of overlapping bodies.
+        virtual bool OnNarrowphase(ChCollisionInfo& contactinfo) = 0;
     };
 
     /// Specify a callback object to be used each time a collision pair is found during
@@ -141,14 +141,18 @@ class ChApi ChCollisionSystem {
     virtual bool RayHit(const ChVector<>& from, const ChVector<>& to, ChRayhitResult& mresult) const = 0;
 
     /// Perform a ray-hit test with the specified collision model.
-    virtual bool RayHit(const ChVector<>& from, const ChVector<>& to, ChCollisionModel* model, ChRayhitResult& mresult) const = 0;
+    virtual bool RayHit(const ChVector<>& from,
+                        const ChVector<>& to,
+                        ChCollisionModel* model,
+                        ChRayhitResult& mresult) const = 0;
 
-    // SERIALIZATION
-
+    /// Method to allow serialization of transient data to archives.
     virtual void ArchiveOUT(ChArchiveOut& marchive) {
         // version number
         marchive.VersionWrite<ChCollisionSystem>();
     }
+
+    /// Method to allow de-serialization of transient data from archives.
     virtual void ArchiveIN(ChArchiveIn& marchive) {
         // version number
         int version = marchive.VersionRead<ChCollisionSystem>();
