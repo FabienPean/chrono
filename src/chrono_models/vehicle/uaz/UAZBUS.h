@@ -35,6 +35,9 @@ namespace chrono {
 namespace vehicle {
 namespace uaz {
 
+/// @addtogroup vehicle_models_uaz
+/// @{
+
 class CH_MODELS_API UAZBUS {
   public:
     UAZBUS();
@@ -69,6 +72,9 @@ class CH_MODELS_API UAZBUS {
     double GetTotalMass() const;
 
     void Initialize();
+
+    void LockAxleDifferential(int axle, bool lock) { m_vehicle->LockAxleDifferential(axle, lock); }
+    void LockCentralDifferential(int which, bool lock) { m_vehicle->LockCentralDifferential(which, lock); }
 
     void SetAerodynamicDrag(double Cd, double area, double air_density);
 
@@ -119,6 +125,8 @@ class CH_MODELS_API UAZBUS {
 
     double m_tire_mass;
 };
+
+/// @} vehicle_models_uaz
 
 }  // end namespace uaz
 }  // end namespace vehicle

@@ -74,6 +74,16 @@ void ShaftsDriveline4WD::Create(const rapidjson::Document& d) {
     m_central_differential_ratio = d["Gear Ratio"]["Central Differential"].GetDouble();
     m_front_differential_ratio = d["Gear Ratio"]["Front Differential"].GetDouble();
     m_rear_differential_ratio = d["Gear Ratio"]["Rear Differential"].GetDouble();
+
+    m_axle_differential_locking_limit = 100;
+    if (d.HasMember("Axle Differential Locking Limit")) {
+        m_axle_differential_locking_limit = d["Axle Differential Locking Limit"].GetDouble();
+    }
+
+    m_central_differential_locking_limit = 100;
+    if (d.HasMember("Central Differential Locking Limit")) {
+        m_central_differential_locking_limit = d["Central Differential Locking Limit"].GetDouble();
+    }
 }
 
 }  // end namespace vehicle

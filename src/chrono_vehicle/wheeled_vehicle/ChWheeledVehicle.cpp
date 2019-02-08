@@ -79,6 +79,17 @@ void ChWheeledVehicle::Synchronize(double time,
 }
 
 // -----------------------------------------------------------------------------
+// Enable/disable differential locking.
+// -----------------------------------------------------------------------------
+void ChWheeledVehicle::LockAxleDifferential(int axle, bool lock) {
+    m_driveline->LockAxleDifferential(axle, lock);
+}
+
+void ChWheeledVehicle::LockCentralDifferential(int which, bool lock) {
+    m_driveline->LockCentralDifferential(which, lock);
+}
+
+// -----------------------------------------------------------------------------
 // Set visualization type for the various subsystems
 // -----------------------------------------------------------------------------
 void ChWheeledVehicle::SetSuspensionVisualizationType(VisualizationType vis) {

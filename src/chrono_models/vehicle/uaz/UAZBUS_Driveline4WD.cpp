@@ -38,6 +38,9 @@ const double UAZBUS_Driveline4WD::m_rear_differential_ratio = -1;
 const double UAZBUS_Driveline4WD::m_front_conicalgear_ratio = -1.0/4.625;
 const double UAZBUS_Driveline4WD::m_rear_conicalgear_ratio = -1.0/4.625;
 
+const double UAZBUS_Driveline4WD::m_axle_differential_locking_limit = 100;
+const double UAZBUS_Driveline4WD::m_central_differential_locking_limit = 100;
+
 // -----------------------------------------------------------------------------
 // Constructor of the UAZBUS_Driveline4WD.
 // The direction of the motor block is along the X axis, while the directions of

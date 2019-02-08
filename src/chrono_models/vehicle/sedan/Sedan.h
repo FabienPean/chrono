@@ -35,6 +35,9 @@ namespace chrono {
 namespace vehicle {
 namespace sedan {
 
+/// @addtogroup vehicle_models_sedan
+/// @{
+
 class CH_MODELS_API Sedan {
   public:
     Sedan();
@@ -65,6 +68,8 @@ class CH_MODELS_API Sedan {
     double GetTotalMass() const;
 
     void Initialize();
+
+    void LockAxleDifferential(int axle, bool lock) { m_vehicle->LockAxleDifferential(axle, lock); }
 
     void SetAerodynamicDrag(double Cd, double area, double air_density);
 
@@ -111,6 +116,8 @@ class CH_MODELS_API Sedan {
 
     double m_tire_mass;
 };
+
+/// @} vehicle_models_sedan
 
 }  // end namespace sedan
 }  // end namespace vehicle

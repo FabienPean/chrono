@@ -24,7 +24,7 @@ MESSAGE(STATUS "Unit test programs for FEA module...")
 # runs.  This is needed for tests that need to access the Chrono data
 # directory (since we use a relative path to it)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-  set(MY_WORKING_DIR "${EXECUTABLE_OUTPUT_PATH}/$<CONFIGURATION>")
+  set(MY_WORKING_DIR "${EXECUTABLE_OUTPUT_PATH}/Release")
 else()
   set(MY_WORKING_DIR ${EXECUTABLE_OUTPUT_PATH})
 endif()
@@ -52,7 +52,7 @@ FOREACH(PROGRAM ${TESTS})
         LINK_FLAGS "${LINKER_FLAGS}"
     )
 
-    TARGET_LINK_LIBRARIES(${PROGRAM} ChronoEngine ChronoEngine_fea ${LIBS})
+    TARGET_LINK_LIBRARIES(${PROGRAM} ChronoEngine ${LIBS})
  
     INSTALL(TARGETS ${PROGRAM} DESTINATION ${CH_INSTALL_DEMO})
 
